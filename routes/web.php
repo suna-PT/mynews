@@ -16,17 +16,21 @@ Route::get('/', function () {
 });
 //課題４　グループ化した場合
 Route::group(['prefix' => 'admin'], function() {
-    Route::get('news/create', 'Admin\NewsController@add');
-    Route::get('profile/create','Admin\ProfileController@add');
-    Route::get('profile/edit','Admin\ProfileController@edit');
+    // Route::get('news/create', 'Admin\NewsController@add');
+    Route::get('profile/create','Admin\ProfileController@add')->middleware('auth');
+    Route::get('profile/edit','Admin\ProfileController@edit')->middleware('auth');
 });
+
+Route::post('login','Admin\ProfileController@add')->middleware('auth');
 
 //課題３
 Route::get('XXX', 'AAAController@bbb');
 
-//課題４　グループ化しない場合
-//admin/profile/create にアクセスしたら ProfileController の add Actionに割り当てる
-Route::get('admin/profile/create','Admin\ProfileController@add');
+Route::group(['prefix' => 'admin'], function() {
+    Route::get('news/create', 'Admin\NewsController@add');
+    Route::post('login','Admin\ProfileController@add');
+});
 
-//admin/profile/edit にアクセスしたら ProfileController の edit Action に割り当てる
-Route::get('admin/profile/edit','Admin\ProfileController@edit');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

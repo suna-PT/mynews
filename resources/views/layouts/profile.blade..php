@@ -40,6 +40,27 @@
                         
                         <ul class="navbar-nav mr-auto">
                             
+                        @guest
+                            <li><a class="nav-link" href="{{ route('login') }}</a></li>
+                        @else
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" area-haspopup="true" area-expanded="false" v-pre>
+                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                
+                                </a>
+                                
+                                <div class="dropdown-menu" area-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="enent.preventDefault();
+                                                      document.getElementById('logout-from').submit();">
+                                          {{ __('Logout') }}
+                                    </a>
+                                    
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>
                         </ul>
                         
                         <ul class="navbar-nav ml-auto">
