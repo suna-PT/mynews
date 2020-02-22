@@ -17,25 +17,21 @@ Route::get('/', function () {
 Route::group(['prefix' => 'admin'], function() {
     // Route::get('news/create', 'Admin\NewsController@add');
     Route::get('profile/create','Admin\ProfileController@add')->middleware('auth');
-    //課題３　php１３ getをpostに変更
-    Route::post('profile/edit','Admin\ProfileController@edit')->middleware('auth');
+    //変更点
+    Route::post('profile/edit','Admin\ProfileController@update')->middleware('auth');
+    Route::get('news/create', 'Admin\NewsController@add');
+    Route::post('profile/create','Admin\ProfileController@create');
+    Route::get('news/create', 'Admin\NewsController@add');
+    Route::post('news/create', 'Admin\NewsController@create');
 });
 
 Route::post('login','Admin\ProfileController@add')->middleware('auth');
 
 Route::get('XXX', 'AAAController@bbb');
 
-Route::group(['prefix' => 'admin'], function() {
-    Route::get('news/create', 'Admin\NewsController@add');
-    Route::post('login','Admin\ProfileController@add');
-});
+
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
-    Route::get('news/create', 'Admin\NewsController@add');
-    Route::post('news/create', 'Admin\NewsController@create');
-
-});
